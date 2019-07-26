@@ -66,7 +66,8 @@ class KeyInformationGathering():
 
     def save_feed(self, feed):
         list_of_feeds=[]
-        list_of_feeds.append(feed)
+        for i in feed:
+            list_of_feeds.append(feed)
         print(list_of_feeds)
         #with open('eventfeeds.json', 'a+') as write_file:
         #   json.dump(feed, write_file)
@@ -116,11 +117,11 @@ def main():
     otxObject = alienVault(headers)
     otx_feed = otxObject.fetch_feed()
     # otxObject.send_feed(otx_feed)
-    KeyInformationGathering.save_feed(None,otx_feed)
+    
 
     resilientObject = resilientAPI()
     resilient_feed = resilientObject.fetch_incident(resilientObject.client_connection())
-    KeyInformationGathering.save_feed(None, resilient_feed)
+    KeyInformationGathering.save_feed(None, [otx_feed, resilient_feed])
 #  otxObject.send_feed(feed)
 
 if __name__ == "__main__":
