@@ -16,13 +16,13 @@ class alienVault():
     def fetch_feed(self):
         response = requests.get(self.url, headers=self.headers)
         response_json = response.json()
-       # print(json.dumps(response_json, indent=4))
+        # print(json.dumps(response_json, indent=4))
         return response_json
 
     #def send_feed(self,feed):
-     #   with open('eventfeeds.json','a+') as write_file:
-      #      json.dump(feed, write_file)
-       #     write_file.write("\n")
+    #   with open('eventfeeds.json','a+') as write_file:
+    #      json.dump(feed, write_file)
+    #     write_file.write("\n")
 
 
 class resilientAPI():
@@ -69,8 +69,8 @@ class KeyInfomationGathering():
         list_of_feeds.append(feed)
         print(list_of_feeds)
         #with open('eventfeeds.json', 'a+') as write_file:
-         #   json.dump(feed, write_file)
-          #  write_file.write(",\n")
+        #   json.dump(feed, write_file)
+        #  write_file.write(",\n")
 
     def temp(self):
         with open('eventfeeds.json', 'a+') as write_file:
@@ -86,26 +86,26 @@ class KeyInfomationGathering():
             if 'id' in i or 'author' in i:
                 try:
                     # resilient info gathering
-            	    id = i['id']
-            	    eventName=i['name']
-            	    orgName=i['properties']['gsma_member']
-            	    date=i['create_date']
-            	    tlp=i['severity_code']
-            	    category=i['incident_type_ids'][0]
-           	    store_key_info(id, eventName, orgName, tlp, category, date)
+                    id = i['id']
+                    eventName=i['name']
+                    orgName=i['properties']['gsma_member']
+                    date=i['create_date']
+                    tlp=i['severity_code']
+                    category=i['incident_type_ids'][0]
+                    store_key_info(id, eventName, orgName, tlp, category, date)
                 except:
-               	    # alien vault info gathering
-           	    id = i['author']['id']
-            	    eventName = i['name']
-            	    orgName = i['author_name']
-            	    tlp = i['TLP']
-            	    category = i['industries'][0]
-            	    date = i['created']
-            	    store_key_info(id, eventName, orgName, tlp, category, date)
+                    # alien vault info gathering
+                    id = i['author']['id']
+                    eventName = i['name']
+                    orgName = i['author_name']
+                    tlp = i['TLP']
+                    category = i['industries'][0]
+                    date = i['created']
+                    store_key_info(id, eventName, orgName, tlp, category, date)
 
     def store_key_info(self, id, eventName, orgName, tlp, category, date):
         tempFeed.update( {"id":id, 'eventName':eventName, 'orgName':orgName,
-                              'date':date, 'tlp':tlp, 'category':category})
+                          'date':date, 'tlp':tlp, 'category':category})
         eventFeed.append(tempFeed)
 
 def main():
@@ -115,13 +115,13 @@ def main():
     apiObject = KeyInformationGathering()
     otxObject = alienVault(headers)
     otx_feed = otxObject.fetch_feed()
-   # otxObject.send_feed(otx_feed)
+    # otxObject.send_feed(otx_feed)
     KeyInformationGathering.save_feed(otx_feed)
 
     resilientObject = resilientAPI()
     resilient_feed = resilientObject.fetch_incident(resilientObject.client_connection())
     KeyInformationGathering.save_feed(resilient_feed)
-  #  otxObject.send_feed(feed)
+#  otxObject.send_feed(feed)
 
 if __name__ == "__main__":
     main()
