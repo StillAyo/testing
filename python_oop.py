@@ -78,7 +78,7 @@ class KeyInformationGathering():
             data=json.load(read_file)
 
         for i in data:
-            print(json.dumps(i, indent=4))
+            #print(json.dumps(i, indent=4))
             if 'id' in i or 'author' in i:
                 try:
                     # resilient info gathering
