@@ -68,14 +68,10 @@ class KeyInformationGathering():
         list_of_feeds=[]
         for i in feed:
             list_of_feeds.append(feed)
-        print(list_of_feeds)
-        #with open('eventfeeds.json', 'a+') as write_file:
-        #   json.dump(feed, write_file)
-        #  write_file.write(",\n")
-
-    def temp(self):
+        print(json.dumps(list_of_feeds, indent=4))
         with open('eventfeeds.json', 'a+') as write_file:
-            write_file.write("]")
+           json.dump(feed, write_file)
+        #  write_file.write(",\n")
 
     def retrieve_key_info(self):
         with open('eventfeeds.json','r') as read_file:
@@ -108,6 +104,7 @@ class KeyInformationGathering():
         tempFeed.update( {"id":id, 'eventName':eventName, 'orgName':orgName,
                           'date':date, 'tlp':tlp, 'category':category})
         eventFeed.append(tempFeed)
+        print(json.dumps(eventFeed, indent=4))
 
 def main():
     headers = {
