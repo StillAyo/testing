@@ -68,7 +68,7 @@ class KeyInformationGathering():
         list_of_feeds=[]
         for i in feed:
             list_of_feeds.append(feed)
-        print(json.dumps(list_of_feeds, indent=4))
+       # print(json.dumps(list_of_feeds, indent=4))
         with open('eventfeeds.json', 'a+') as write_file:
            json.dump(feed, write_file)
         #  write_file.write(",\n")
@@ -79,7 +79,6 @@ class KeyInformationGathering():
 
         for i in data:
             print(json.dumps(i, indent=4))
-            tempFeed={}
             if 'id' in i or 'author' in i:
                 try:
                     # resilient info gathering
@@ -89,7 +88,7 @@ class KeyInformationGathering():
                     date=i['create_date']
                     tlp=i['severity_code']
                     category=i['incident_type_ids'][0]
-                    store_key_info(id, eventName, orgName, tlp, category, date)
+                    self.store_key_info(id, eventName, orgName, tlp, category, date)
                 except:
                     # alien vault info gathering
                     id = i['author']['id']
@@ -98,13 +97,14 @@ class KeyInformationGathering():
                     tlp = i['TLP']
                     category = i['industries'][0]
                     date = i['created']
-                    store_key_info(id, eventName, orgName, tlp, category, date)
+                    self.store_key_info(id, eventName, orgName, tlp, category, date)
 
     def store_key_info(self, id, eventName, orgName, tlp, category, date):
+        tempFeed={}
         tempFeed.update( {"id":id, 'eventName':eventName, 'orgName':orgName,
                           'date':date, 'tlp':tlp, 'category':category})
-        eventFeed.append(tempFeed)
-        print(json.dumps(eventFeed, indent=4))
+        KeyInformationGathering.eventFeeds.append(tempFeed)
+        print(json.dumps(KeyInformationGathering.eventFeeds, indent=4))
 
 def main():
     headers = {
@@ -119,6 +119,7 @@ def main():
     resilientObject = resilientAPI()
     resilient_feed = resilientObject.fetch_incident(resilientObject.client_connection())
     KeyInformationGathering.save_feed(None, [otx_feed, resilient_feed])
+    apiObject.retrieve_key_info()
 #  otxObject.send_feed(feed)
 
 if __name__ == "__main__":
