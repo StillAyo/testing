@@ -114,13 +114,13 @@ def main():
     }
     apiObject = KeyInformationGathering()
     otxObject = alienVault(headers)
-    #otx_feed = otxObject.fetch_feed()
+    otx_feed = otxObject.fetch_feed()
     # otxObject.send_feed(otx_feed)
-    KeyInformationGathering.save_feed(otxObject.fetch_feed())
+    KeyInformationGathering.save_feed(None,otx_feed)
 
     resilientObject = resilientAPI()
-    #resilient_feed = resilientObject.fetch_incident(resilientObject.client_connection())
-    KeyInformationGathering.save_feed(resilientObject.fetch_incident(resilientObject.client_connection()))
+    resilient_feed = resilientObject.fetch_incident(resilientObject.client_connection())
+    KeyInformationGathering.save_feed(None, resilient_feed)
 #  otxObject.send_feed(feed)
 
 if __name__ == "__main__":
