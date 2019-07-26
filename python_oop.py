@@ -58,13 +58,13 @@ class resilientAPI():
         assert response
         return response
 
-class KeyInfomationGathering():
+class KeyInformationGathering():
     eventFeeds=[]
 
     def __init__(self):
         pass
 
-    def save_feeds(self, feed):
+    def save_feed(self, feed):
         list_of_feeds=[]
         list_of_feeds.append(feed)
         print(list_of_feeds)
@@ -114,13 +114,13 @@ def main():
     }
     apiObject = KeyInformationGathering()
     otxObject = alienVault(headers)
-    otx_feed = otxObject.fetch_feed()
+    #otx_feed = otxObject.fetch_feed()
     # otxObject.send_feed(otx_feed)
-    KeyInformationGathering.save_feed(otx_feed)
+    KeyInformationGathering.save_feed(otxObject.fetch_feed())
 
     resilientObject = resilientAPI()
-    resilient_feed = resilientObject.fetch_incident(resilientObject.client_connection())
-    KeyInformationGathering.save_feed(resilient_feed)
+    #resilient_feed = resilientObject.fetch_incident(resilientObject.client_connection())
+    KeyInformationGathering.save_feed(resilientObject.fetch_incident(resilientObject.client_connection()))
 #  otxObject.send_feed(feed)
 
 if __name__ == "__main__":
