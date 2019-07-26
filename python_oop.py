@@ -66,9 +66,11 @@ class KeyInfomationGathering():
 
     def save_feeds(self, feed):
         list_of_feeds=[]
-        with open('eventfeeds.json', 'a+') as write_file:
-            json.dump(feed, write_file)
-            write_file.write(",\n")
+        list_of_feeds.append(feed)
+        print(list_of_feeds)
+        #with open('eventfeeds.json', 'a+') as write_file:
+         #   json.dump(feed, write_file)
+          #  write_file.write(",\n")
 
     def temp(self):
         with open('eventfeeds.json', 'a+') as write_file:
